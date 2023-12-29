@@ -7,15 +7,25 @@ Parameters:
     AssociationPropertyMetadata:
       Service: supplier.computenest.aliyuncs.com
     Description: 请前往RAM控制台创建角色，角色需拥有上述模板定义的资源所需的创建权限。<a href='https://help.aliyun.com/zh/compute-nest/create-a-compute-nest-ram-role-and-grant-permissions-to-the-role' target='_blank'><b> 查看文档</b><font color='blue'></a>
+  RegionId:
+    Type: String
+    Label:
+      zh-cn: 部署地域
+      en: Deploy Region
+    AssociationProperty: ALIYUN::ECS::RegionId
   # 可用区
   ZoneId:
     Type: String
     AssociationProperty: ALIYUN::ECS::Instance:ZoneId
+    AssociationPropertyMetadata:
+      RegionId: ${RegionId}
     Label:
       en: VSwitch Available Zone
       zh-cn: 可用区
   VpcId:
     AssociationProperty: ALIYUN::ECS::VPC::VPCId
+    AssociationPropertyMetadata:
+      RegionId: ${RegionId}
     Type: String
     Label:
       en: VPC ID
@@ -40,8 +50,9 @@ Metadata:
           en: Basic Configuration
           zh-cn: 基础配置
       - Parameters:
-          - ZoneId
+          - RegionId
           - VpcId
+          - ZoneId
           - VSwitchId
         Label:
           en: Network Configuration

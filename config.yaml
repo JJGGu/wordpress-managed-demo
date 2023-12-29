@@ -11,8 +11,11 @@ Service:
       SupplierTemplateConfigs:
         - Name: 高可用版
           Url: 'templates/template.yaml'
+          AllowedRegions:
+            - ${RegionId}
           PredefinedParameters: []
           HiddenParameterKeys:
+            - RegionId
             - VpcId
             - VSwitchId
             - ZoneId
@@ -23,7 +26,7 @@ Service:
                 - ZoneId
                 - VSwitchId
               ParameterValueMapping:
-                cn-hangzhou:
+                ${RegionId}:
                   Parameters:
                     VpcId: ${VpcId}
                     ZoneId: ${ZoneId}
@@ -32,11 +35,6 @@ Service:
         '{{ computenest::file::wordpress }}':
           ArtifactId: ${Artifact.Artifact_1.ArtifactId}
           ArtifactVersion: ${Artifact.Artifact_1.ArtifactVersion}
-    TemplateConfigs:
-      - Name: 高可用版
-        Url: templates/parameters.yaml
-        AllowedRegions:
-          - cn-hangzhou
   ServiceType: managed
   ServiceInfo:
     Locale: zh-CN
